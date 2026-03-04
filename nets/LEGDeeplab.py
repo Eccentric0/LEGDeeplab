@@ -432,17 +432,3 @@ class AdaptiveDecoder(nn.Module):
         x = self.EFA(edge, x)
         x = self.upsample_block(x)
         return self.final_conv(x)
-
-
-if __name__ == "__main__":
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = LEGDeeplab(in_channels=3, num_classes=3).to(device)
-    test_input = torch.randn(1, 3, 512, 512).to(device)
-    flops, params = profile(model, inputs=(test_input,))
-
-    with torch.no_grad():
-        output = model(test_input)
-        print(f"Model Output Shape: {output.shape}")
-
-    print(f"Total Parameters: {sum(p.numel() for p in model.parameters()) / 1e6:.2f}M")
-    print(f"Computational Complexity: {flops / 1e9:.2f} GFLOPs")
