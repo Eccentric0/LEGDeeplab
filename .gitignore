@@ -1,22 +1,233 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
+# LEGDeeplab - Git Ignore File
+# Comprehensive .gitignore for semantic segmentation project
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.c
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#poetry.lock
+# .venv
+# venv/
+# env/
+# .env
+
+# pdm
+#   Similar to Pipfile.lock, it is recommended to include pdm.lock in version control.
+#pdm.lock
+# .pdm-python
+# .pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# IDE-specific files
+.idea/
 .vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-file
-*.flf
-#Test results file
-TestResults.xml
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+VolumeIcon.icns
+com.apple.timemachine.supported
+*.lnk
+
+# Data files (large datasets)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.h5
+*.hdf5
+*.mat
+
+# Model checkpoints and logs
+logs/
+checkpoints/
+runs/
+experiments/
+outputs/
+
+# Training artifacts
+*.pth
+*.pt
+*.ckpt
+*.weights
+*.onnx
+*.pb
+*.tflite
+*.engine
+
+# Dataset folders (unless specifically needed)
+datasets/
+data/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Configuration files with sensitive data
+config_local.py
+local_config.yaml
+*.key
+*.pem
+*.crt
+*.cert
+secrets.json
+.env.local
+.env.dev
+.env.prod
+
+# Custom ignore patterns for LEGDeeplab
+# Ignore model predictions during development
+img_out/
+predictions/
+
+# Ignore training cache
+.cache/
+
+# Ignore exported models
+exported_models/
+
+# Ignore temporary training files
+*.tmp.pkl
+*.temp.npy
+
+# Ignore specific experiment directories
+experiments/*/logs/
+experiments/*/checkpoints/

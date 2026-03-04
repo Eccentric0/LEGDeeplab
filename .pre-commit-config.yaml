@@ -1,0 +1,369 @@
+# LEGDeeplab - Pre-commit Configuration
+# Configuration for pre-commit hooks to maintain code quality
+
+repos:
+  # Black: Python code formatter
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        language_version: python3.8
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.md|
+            .*\.yaml|
+            .*\.yml|
+            .*\.json|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+
+  # Isort: Import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+        args: ["--profile", "black", "--filter-files"]
+
+  # Flake8: Python linting
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.md|
+            .*\.yaml|
+            .*\.yml|
+            .*\.json|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+        additional_dependencies: [flake8-docstrings]
+
+  # MyPy: Static type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.1.1
+    hooks:
+      - id: mypy
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.md|
+            .*\.yaml|
+            .*\.yml|
+            .*\.json|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+        args: [--package, nets, --package, utils]
+
+  # Pyupgrade: Upgrade syntax for newer Python versions
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.3.1
+    hooks:
+      - id: pyupgrade
+        args: [--py38-plus]
+
+  # Check for added large files
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: end-of-file-fixer
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+      - id: trailing-whitespace
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+
+  # Check for debug statements
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        name: flake8-debugger
+        entry: flake8
+        language: python
+        types: [python]
+        args: ['--select=T', '--per-file-ignores=__init__.py:F401']
+
+  # Security checks with bandit
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args: ['-r', '.', '-ll', '-ii', '-s=B301,B308,B310,B403,B404,B603,B605,B607']
+        exclude: >
+          (?x)^(
+            .*\.ipynb|
+            .*\.txt|
+            .*\.md|
+            .*\.yaml|
+            .*\.yml|
+            .*\.json|
+            .*\.svg|
+            .*\.png|
+            .*\.jpg|
+            .*\.gif|
+            .*\.bmp|
+            .*\.ico|
+            .*\.pdf|
+            .*\.zip|
+            .*\.tar\.gz|
+            .*\.h5|
+            .*\.pth|
+            .*\.pt|
+            .*\.ckpt|
+            .*\.weights|
+            .*\.onnx|
+            .*\.pb|
+            .*\.tflite|
+            .*\.engine|
+            .*\.tmp|
+            .*\.temp|
+            .*/datasets/.*|
+            .*/logs/.*|
+            .*/checkpoints/.*|
+            .*/img_out/.*|
+            .*/outputs/.*|
+            .*/\.git/.*|
+            .*/__pycache__/.*|
+            .*/\.pytest_cache/.*|
+            .*/\.mypy_cache/.*|
+            .*/\.vscode/.*|
+            .*/\.idea/.*|
+            .*/\.tox/.*|
+            .*/\.nox/.*|
+            .*/build/.*|
+            .*/dist/.*|
+            .*/\.eggs/.*|
+            .*/eggs/.*|
+            .*/\.venv/.*|
+            .*/venv/.*|
+            .*/env/.*|
+            .*/\.env/.*
+          )$
+
+# Configuration for specific hooks
+ci:
+  autofix_prs: false
+  skip: []
+  submodules: false

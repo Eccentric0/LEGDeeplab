@@ -1,0 +1,216 @@
+# LEGDeeplab Configuration File
+# Advanced configuration system using Hydra
+
+defaults:
+  - _self_
+  - dataset: voc2012  # Default dataset configuration
+  - model: legdeeplab  # Default model configuration
+  - training: default  # Default training configuration
+  - augmentation: default  # Default augmentation configuration
+
+# General Configuration
+experiment:
+  name: "legdeeplab_experiment"
+  description: "LEGDeeplab semantic segmentation experiment"
+  seed: 42
+  deterministic: false
+  resume_from_checkpoint: null
+
+# Model Configuration
+model:
+  _target_: nets.LEGDeeplab.LEGDeeplab
+  in_channels: 3
+  num_classes: 21
+  backbone: "resnet50"
+  pretrained: true
+  attention_modules:
+    lsk_enabled: true
+    scconv_enabled: true
+    agca_enabled: true
+    efa_enabled: true
+
+# Dataset Configuration
+dataset:
+  name: "voc2012"
+  path: "./datasets/VOCdevkit"
+  num_classes: 21
+  input_size: [512, 512]
+  train_split: "train"
+  val_split: "val"
+  test_split: "test"
+  
+  # Data loading
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+
+# Training Configuration
+training:
+  # Basic training parameters
+  epochs: 200
+  batch_size: 8
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  momentum: 0.9
+  
+  # Advanced training parameters
+  scheduler:
+    type: "poly"
+    power: 0.9
+    min_lr: 1.0e-06
+  
+  optimizer:
+    type: "adamw"
+    betas: [0.9, 0.999]
+    eps: 1.0e-08
+  
+  # Mixed precision training
+  fp16: true
+  gradient_clip_val: 1.0
+  
+  # Loss function configuration
+  losses:
+    ce_weight: 1.0
+    dice_weight: 0.5
+    focal_weight: 0.5
+    boundary_weight: 0.3
+    focal_alpha: 0.25
+    focal_gamma: 2.0
+  
+  # Regularization
+  dropout: 0.1
+  drop_path_rate: 0.1
+
+# Augmentation Configuration
+augmentation:
+  # Geometric transformations
+  horizontal_flip_prob: 0.5
+  vertical_flip_prob: 0.1
+  rotation_degrees: 10
+  scale_range: [0.5, 2.0]
+  crop_size: [512, 512]
+  
+  # Photometric transformations
+  brightness_range: [0.8, 1.2]
+  contrast_range: [0.8, 1.2]
+  saturation_range: [0.8, 1.2]
+  hue_range: [-0.1, 0.1]
+  
+  # Advanced augmentations
+  mixup_enabled: true
+  cutmix_enabled: true
+  gridmask_enabled: true
+  mosaic_enabled: false
+
+# Evaluation Configuration
+evaluation:
+  # Metrics to compute
+  metrics:
+    - "mIoU"
+    - "mPA"
+    - "FWIoU"
+    - "precision"
+    - "recall"
+    - "f1_score"
+  
+  # Evaluation settings
+  eval_frequency: 1  # Evaluate every N epochs
+  save_best_only: true
+  early_stopping:
+    enabled: true
+    patience: 20
+    min_delta: 0.001
+
+# Hardware Configuration
+hardware:
+  device: "auto"  # auto, cpu, cuda, cuda:0, etc.
+  num_gpus: 1
+  distributed_backend: "ddp"  # ddp, dp, deepspeed
+  precision: 16  # 16, 32, 64
+  
+  # Memory optimization
+  gradient_accumulation_steps: 1
+  checkpoint_activations: false
+
+# Logging Configuration
+logging:
+  # Console logging
+  console_level: "INFO"
+  file_level: "DEBUG"
+  
+  # TensorBoard logging
+  tensorboard:
+    enabled: true
+    log_dir: "logs/tensorboard"
+  
+  # Weights & Biases logging
+  wandb:
+    enabled: false
+    project: "legdeeplab"
+    entity: null
+  
+  # MLflow logging
+  mlflow:
+    enabled: false
+    tracking_uri: null
+    experiment_name: "legdeeplab"
+
+# Checkpoint Configuration
+checkpoint:
+  save_dir: "checkpoints"
+  save_top_k: 3
+  monitor: "val_mIoU"
+  mode: "max"
+  every_n_epochs: 1
+  filename: "legdeeplab-{epoch:02d}-{val_mIoU:.4f}"
+
+# Export Configuration
+export:
+  onnx:
+    enabled: true
+    opset_version: 11
+    simplify: true
+    dynamic_axes:
+      input: ["batch_size", "channels", "height", "width"]
+      output: ["batch_size", "num_classes", "height", "width"]
+  
+  tensorrt:
+    enabled: false
+    precision: "fp16"  # fp32, fp16, int8
+
+# Advanced Configuration
+advanced:
+  # Advanced training techniques
+  ema:  # Exponential Moving Average
+    enabled: true
+    decay: 0.999
+    update_freq: 1
+  
+  # Knowledge distillation
+  distillation:
+    enabled: false
+    teacher_model: null
+    temperature: 4.0
+    alpha: 0.5
+  
+  # Curriculum learning
+  curriculum:
+    enabled: false
+    strategy: "easy_to_hard"
+    milestones: [50, 100, 150]
+
+# Paths Configuration
+paths:
+  data_dir: "./datasets"
+  log_dir: "./logs"
+  checkpoint_dir: "./checkpoints"
+  output_dir: "./outputs"
+  config_dir: "./configs"
+
+# Debug Configuration
+debug:
+  enabled: false
+  fast_dev_run: false
+  track_gradients: false
+  memory_monitoring: false
+  anomaly_detection: false
