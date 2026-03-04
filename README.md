@@ -10,7 +10,7 @@
 
 ## Installation
 ```bash
-git clone https://github.com/zhou/SegmentationNet.git
+git clone https://github.com/Eccentric0/LEGDeeplab
 cd SegmentationNet
 pip install -r requirements.txt
 ```
@@ -18,10 +18,10 @@ pip install -r requirements.txt
 ## Quick Start
 ```bash
 # Train the model
-python train.py --model_name LEGDeeplab --backbone resnet18 --num_classes 21
+python train.py --model_name LEGDeeplab  --num_classes 3
 
 # Evaluate the model
-python eval.py --miou_mode 0 --num_classes 21
+python eval.py --miou_mode 0 --num_classes 3
 ```
 
 ## Results
